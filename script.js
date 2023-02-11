@@ -523,8 +523,8 @@ window.onload = function () {
     const data = getData();
 
     const maxValue = Math.max(...Object.values(data));
-
-    const gridStep = Math.floor(maxValue / 10) || 1;
+    const stepCount = 10;
+    const gridStep = Math.floor(maxValue / stepCount) || 1;
 
     new BarChart({
       canvas: canvas,
