@@ -498,9 +498,7 @@ window.onload = function () {
 
     return averages;
   }
-  // #endregion Functions for controls
 
-  // #region Functions for drawing charts
   function getData() {
     switch (eventMeasurement.id) {
       case 'count':
@@ -517,9 +515,10 @@ window.onload = function () {
       default:
         return {};
     }
-
   }
+  // #endregion Functions for controls
 
+  // #region Functions for drawing charts
   function createNewBarChart() {
     const data = getData();
 
