@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Widget</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+  <div id="content">
+    <div class="widget">
+      <h1 class="widget-title">Results of severity in last 24h</h1>
+      <div class="widget-body">
+        <div class="controls">
+          <div class="control-block">
+            <label class="control-block-label">Chart type:</label>
+            <div>
+              <input type="radio" id="bar" name="chart-type" value="Bar" checked>
+              <label for="bar">Bar</label>
+            </div>
+            <div>
+              <input type="radio" id="pie" name="chart-type" value="Pie">
+              <label for="pie">Pie</label>
+            </div>
+            <div>
+              <input type="radio" id="doughnut" name="chart-type" value="Doughnut">
+              <label for="doughnut">Doughnut</label>
+            </div>
+          </div>
+          <div class="control-block">
+            <label class="control-block-label">Event measurement:</label>
+            <div>
+              <input type="radio" id="duration" name="event-measurement" value="Duration" checked>
+              <label for="duration">Duration</label>
+            </div>
+            <div>
+              <input type="radio" id="count" name="event-measurement" value="Count">
+              <label for="count">Count</label>
+            </div>
+          </div>
+          <div id="measurement-method" class="control-block">
+            <label class="control-block-label">Measurement method:</label>
+            <div>
+              <input type="radio" id="average" name="measurement-method" value="Average" checked>
+              <label for="average">Average</label>
+            </div>
+            <div>
+              <input type="radio" id="sum" name="measurement-method" value="Sum">
+              <label for="sum">Sum</label>
+            </div>
+          </div>
+        </div>
+        <div class="chart">
+          <canvas id="canvas"></canvas>
+          <div class="chart-info">
+            <div class="total event-count">
+              <label for="event-count-total">Total event count</label>
+              <span id="event-count-total" class="total-value"></span>
+            </div>
+            <div class="total event-duration">
+              <label for="event-duration-total">Total event duration</label>
+              <span id="event-duration-total" class="total-value">
+                <span class="hours">
+                  <span class="val"></span>
+                  <span class="unit">h</span>
+                </span>
+                <span class="minutes">
+                  <span class="val"></span>
+                  <span class="unit">min</span>
+                </span>
+                <span class="seconds">
+                  <span class="val"></span>
+                  <span class="unit">s</span>
+                </span>
+              </span>
+            </div>
+            <legend for="canvas"></legend>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="simulate-event" type="button" title="Add new event with random severity and duration for test">
+      <span>Simulate random event</span>
+    </button>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
