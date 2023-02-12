@@ -157,8 +157,9 @@ window.onload = function () {
   }
 
   function calculateDurationTotal() {
-    const seconds = getObjectPropValueSum(events, 'duration'); // Total seconds
-    const time = new Date(seconds * 1000).toISOString().substring(11, 19); // String of hh:mm:ss
+    const secondsTotal = getObjectPropValueSum(events, 'duration'); // Total seconds
+
+    const time = new Date(secondsTotal * 1000).toISOString().substring(11, 19); // String of hh:mm:ss
 
     const hoursEl = document.querySelector('#event-duration-total .hours');
     const hoursValEl = document.querySelector('#event-duration-total .hours .val');
@@ -187,6 +188,9 @@ window.onload = function () {
     if (s) {
       secondsValEl.innerText = s;
       secondsEl.style.display = 'flex';
+    } else if (!secondsTotal) {
+      secondsValEl.innerText = 0;
+      secondsEl.style.display = 'flex';
     } else {
       secondsEl.style.display = 'none';
     }
@@ -198,8 +202,11 @@ window.onload = function () {
   const severityColors = severities?.map(severity => severity.color) || [];
 
   const canvas = document.getElementById('canvas');
+  const noEvents = document.getElementById('no-events');
 
   const eventCountTotal = document.getElementById('event-count-total');
+
+  const controlRadios = document.querySelectorAll('.controls input[type="radio"]');
 
   const chartTypes = document.querySelectorAll('input[name="chart-type"]');
   let chartType = document.querySelector('input[name="chart-type"]:checked');
@@ -547,18 +554,28 @@ window.onload = function () {
   }
 
   function drawChart() {
-    switch (chartType.id) {
-      case 'bar':
-        createNewBarChart();
-        break;
-      case 'pie':
-        createNewPieChart();
-        break;
-      case 'doughnut':
-        createNewPieChart(true);
-        break;
-      default:
-        break;
+    if (events.length) {
+      noEvents.style.display = 'none';
+      canvas.style.display = 'flex';
+      controlRadios?.forEach((control) => control.disabled = false);
+
+      switch (chartType.id) {
+        case 'bar':
+          createNewBarChart();
+          break;
+        case 'pie':
+          createNewPieChart();
+          break;
+        case 'doughnut':
+          createNewPieChart(true);
+          break;
+        default:
+          break;
+      }
+    } else {
+      canvas.style.display = 'none';
+      noEvents.style.display = 'flex';
+      controlRadios?.forEach((control) => control.disabled = true);
     }
   }
   // #endregion Functions for drawing charts
@@ -566,6 +583,11 @@ window.onload = function () {
   (function () {
     canvas.width = 500;
     canvas.height = 500;
+
+    canvas.style.display = 'none';
+    noEvents.style.display = 'none';
+    controlRadios?.forEach((control) => control.disabled = true);
+
     eventCountTotal.innerText = events.length;
     calculateDurationTotal();
     drawChart();
