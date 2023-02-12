@@ -9,6 +9,7 @@
   --color-chrome: #e0e0e0;
   --color-button-background: #d40000;
   --color-button-background-hover: #aa0000;
+  --color-button-background-disabled: #686868;
   --color-button-foreground: #ffffff;
 }
 
@@ -27,8 +28,19 @@ button {
   border: 2px solid transparent;
   border-radius: 0.25rem;
   padding: 0.5rem;
+  background-color: var(--color-button-background);
+  color: var(--color-button-foreground);
   cursor: pointer;
   transition: 0.2s;
+}
+
+button:not(:disabled):hover {
+  background-color: var(--color-button-background-hover);
+}
+
+button:disabled {
+  background-color: var(--color-button-background-disabled);
+  cursor: not-allowed;
 }
 
 #content {
@@ -184,12 +196,8 @@ legend ul li:not(:last-of-type) {
   font-size: 1rem;
 }
 
-#simulate-event {
+.test-buttons {
+  display: flex;
+  gap: 1rem;
   margin-bottom: 2rem;
-  background-color: var(--color-button-background);
-  color: var(--color-button-foreground);
-}
-
-#simulate-event:hover {
-  background-color: var(--color-button-background-hover);
 }

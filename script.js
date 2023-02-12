@@ -216,6 +216,7 @@ window.onload = function () {
   let measurementMethod = document.querySelector('input[name="measurement-method"]:checked');
 
   const buttonSimulateEvent = document.getElementById('simulate-event');
+  const buttonSimulateNoEvents = document.getElementById('simulate-no-events');
   // #endregion Global variables
 
   // #region Event listeners
@@ -260,10 +261,13 @@ window.onload = function () {
     // Add created random event
     events.push({ severity: severity, duration: duration });
 
-    // Update total counts
-    eventCountTotal.innerText = events?.length;
-    calculateDurationTotal();
+    load();
+    drawChart();
+  });
 
+  buttonSimulateNoEvents.addEventListener('click', () => {
+    events.length = 0;
+    load();
     drawChart();
   });
   // #endregion Event listeners
@@ -580,17 +584,24 @@ window.onload = function () {
   }
   // #endregion Functions for drawing charts
 
+  // #region Init functions
+  function load() {
+    eventCountTotal.innerText = events.length;
+    calculateDurationTotal();
+
+    if (events.length) {
+      buttonSimulateNoEvents.disabled = false;
+    } else {
+      buttonSimulateNoEvents.disabled = true;
+    }
+  }
+
   (function () {
     canvas.width = 500;
     canvas.height = 500;
-
-    canvas.style.display = 'none';
-    noEvents.style.display = 'none';
-    controlRadios?.forEach((control) => control.disabled = true);
-
-    eventCountTotal.innerText = events.length;
-    calculateDurationTotal();
+    load();
     drawChart();
     drawLegend();
   })();
+  // #endregion Init functions
 }
